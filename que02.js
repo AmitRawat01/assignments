@@ -77,6 +77,7 @@ http.createServer(async (req, res) => {
     res.writeHead(404, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'Endpoint not found' }));
   }
-}).listen(3000, () => {
-  console.log('Server running at http://localhost:3000');
+  
+}).listen(6000, () => {
+  console.log('Server running at http://localhost:6000');
 });
