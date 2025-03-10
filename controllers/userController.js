@@ -1,14 +1,14 @@
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
+import User from '../models/User';
+import bcrypt from 'bcryptjs';
 
-exports.registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
     try {
         const { username, email, password, firstname, lastname } = req.body;
 
         let existingUser = await User.findOne({ username });
         if (existingUser) return res.status(400).json({ message: 'Username already exists' });
 
-        existingUser = await User.findOne({ email });
+        existingUser = also await User.findOne({ email });
         if (existingUser) return res.status(400).json({ message: 'Email already exists' });
 
         const salt = await bcrypt.genSalt(10);
