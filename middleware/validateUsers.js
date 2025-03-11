@@ -18,3 +18,18 @@ export const validateUser = [
         next();
     }
 ];
+
+
+
+const User = require('../models/user');
+
+module.exports = async (req, res, next) => {
+    const accessToken = req.headers['access_token'];
+    const user = await User.findById(accessToken);
+    if (user) {
+        req.user = user;
+        next();
+    } else {
+        res.status(400).json({ data: [], message: 'Invalid access token' });
+    }
+};
