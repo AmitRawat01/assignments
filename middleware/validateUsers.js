@@ -1,5 +1,6 @@
 import { body, validationResult } from 'express-validator';
 
+// Solution 1: Validate User Registration
 export const validateUser = [
     body('username').notEmpty().withMessage('Username is required'),
     body('email').isEmail().withMessage('Valid email is required'),
@@ -19,17 +20,26 @@ export const validateUser = [
     }
 ];
 
+// Solution 2: Validate Access Token
+import User from '../models/User';
 
-
-const User = require('../models/user');
-
-module.exports = async (req, res, next) => {
+export const validateAccessToken = async (req, res, next) => {
     const accessToken = req.headers['access_token'];
-    const user = await User.findById(accessToken);
-    if (user) {
+
+    if (!accessToken) {
+        return res.status(400).json({ message: 'Access token required' });
+    }
+
+    try {
+        const user = await User.findById(accessToken);
+
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid access token' });
+        }
+
         req.user = user;
         next();
-    } else {
-        res.status(400).json({ data: [], message: 'Invalid access token' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error' });
     }
 };
