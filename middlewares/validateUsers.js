@@ -1,4 +1,5 @@
 import { body, validationResult } from 'express-validator';
+import User from '../models/User.js';
 
 // Solution 1: Validate User Registration
 export const validateUser = [
@@ -21,8 +22,6 @@ export const validateUser = [
 ];
 
 // Solution 2: Validate Access Token
-import User from '../models/User';
-
 export const validateAccessToken = async (req, res, next) => {
     const accessToken = req.headers['access_token'];
 

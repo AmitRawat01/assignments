@@ -1,13 +1,20 @@
-import express from 'express';
-import connectDB from './config/db';
-import userRoutes from './routes/userRoutes';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-const app = express();
-app.use(express.json());
+dotenv.config();
 
-connectDB();
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+        });
+        console.log('MongoDB connected');
+    } catch (error) {
+        console.error('MongoDB connection failed:', error);
+        process.exit(1);
+    }
+};
 
-app.use('/user', userRoutes);
-
-app.listen(3000, () => console.log('Server running on port 3000'));
-
+export default connectDB;
