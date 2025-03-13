@@ -1,7 +1,16 @@
-import User from '../models/User.js';
+import { User, Address } from '../models/User.js';
+import AccessToken from '../models/AccessToken.js';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
-// Solution 1: Register User
+// Generate Access Token
+const generateAccessToken = (userId) => {
+    const accessToken = crypto.randomBytes(16).toString('hex');
+    const expiry = new Date(Date.now() + 3600 * 1000); // 1 hour expiry
+    return { user_id: userId, access_token: accessToken, expiry };
+};
+
+// Register User
 export const registerUser = async (req, res) => {
     try {
         const { username, email, password, firstname, lastname } = req.body;
@@ -24,40 +33,64 @@ export const registerUser = async (req, res) => {
     }
 };
 
-// Solution 2: Login User
-
+// Login User
 export const loginUser = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        console.log('Received login request:', username);
-
         const user = await User.findOne({ username });
-        if (!user) {
-            console.log('User not found:', username);
-            return res.status(400).json({ data: [], message: 'Invalid credentials' });
-        }
+        if (!user) return res.status(400).json({ data: [], message: 'Invalid credentials' });
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            console.log('Password mismatch for user:', username);
-            return res.status(400).json({ data: [], message: 'Invalid credentials' });
-        }
+        if (!isMatch) return res.status(400).json({ data: [], message: 'Invalid credentials' });
 
-        console.log('User authenticated successfully:', username);
-        return res.status(200).json({ data: { access_token: user._id }, message: 'Login successful' });
+        const { user_id, access_token, expiry } = generateAccessToken(user._id);
+        await AccessToken.create({ user_id, access_token, expiry });
+
+        res.status(200).json({ data: { access_token }, message: 'Login successful' });
     } catch (error) {
-        console.error('Login error:', error);
-        return res.status(500).json({ data: [], message: 'Server error' });
+        res.status(500).json({ data: [], message: 'Server error' });
     }
 };
 
-// Solution 2: Get User Data
-export const getUserData = async (req, res) => {
-    res.status(200).json({ data: req.user, message: 'User data retrieved successfully' });
+// Create User Address
+export const createUserAddress = async (req, res) => {
+    const { user_id, address, city, state, pinCode, phoneNo } = req.body;
+    const accessToken = req.headers['access_token'];
+
+    try {
+        const tokenData = await AccessToken.findOne({ user_id, access_token: accessToken });
+        if (!tokenData || new Date() > tokenData.expiry) return res.status(401).json({ data: [], message: 'Invalid access token' });
+
+        const newAddress = new Address({ user_id, address, city, state, pinCode, phoneNo });
+        await newAddress.save();
+
+        await User.findByIdAndUpdate(user_id, { $push: { addresses: newAddress._id } });
+
+        res.status(201).json({ data: [], message: 'Address added successfully' });
+    } catch (error) {
+        res.status(500).json({ data: [], message: 'Server error' });
+    }
 };
 
-// Solution 2: Delete User Data
+// Get User Data including Addresses
+export const getUserData = async (req, res) => {
+    const userId = req.params.id;
+    const accessToken = req.headers['access_token'];
+
+    try {
+        const tokenData = await AccessToken.findOne({ user_id: userId, access_token: accessToken });
+        if (!tokenData || new Date() > tokenData.expiry) return res.status(401).json({ data: [], message: 'Invalid access token' });
+
+        const userData = await User.findById(userId).populate('addresses');
+
+        res.status(200).json({ data: userData, message: 'User data retrieved successfully' });
+    } catch (error) {
+        res.status(500).json({ data: [], message: 'Server error' });
+    }
+};
+
+// Delete User Data
 export const deleteUserData = async (req, res) => {
     try {
         await User.findByIdAndDelete(req.user._id);
@@ -67,7 +100,7 @@ export const deleteUserData = async (req, res) => {
     }
 };
 
-// Solution 2: List Users
+// List Users
 export const listUsers = async (req, res) => {
     const page = parseInt(req.params.page, 10);
     const limit = 10;
