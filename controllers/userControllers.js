@@ -3,9 +3,10 @@ import AccessToken from '../models/AccessToken.js';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 
-// Generate Access Token
+// Generate Access Token using md5
 const generateAccessToken = (userId) => {
-    const accessToken = crypto.randomBytes(16).toString('hex');
+    const data = userId + Date.now().toString();
+    const accessToken = crypto.createHash('md5').update(data).digest('hex');
     const expiry = new Date(Date.now() + 3600 * 1000); // 1 hour expiry
     return { user_id: userId, access_token: accessToken, expiry };
 };

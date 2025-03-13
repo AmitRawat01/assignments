@@ -14,5 +14,3 @@ export const validateAccessToken = async (req, res, next) => {
         res.status(500).json({ data: [], message: 'Server error' });
     }
 };
-
-// Existing middleware functions remain the same...
