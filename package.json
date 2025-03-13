@@ -1,17 +1,20 @@
 {
-  "name": "my-node-server",
+  "name": "my-app",
   "version": "1.0.0",
-  "main": "server.js",
-  "type": "module",
+  "description": "A sample app using JWT and Passport.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.20.3",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "express-validator": "^6.15.0",
-    "mongoose": "^5.13.23"
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.2",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "sendgrid/mail": "^7.4.0"
   }
 }
