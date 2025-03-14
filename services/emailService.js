@@ -1,9 +1,9 @@
-const sgMail = require('@sendgrid/mail');
-const { sendGridApiKey } = require('../config/keys');
+import sgMail from '@sendgrid/mail';
+import { sendGridApiKey } from '../config/keys';
 
 sgMail.setApiKey(sendGridApiKey);
 
-exports.sendEmail = (to, subject, text) => {
+export const sendEmail = (to, subject, text) => {
   const msg = {
     to: to,
     from: 'noreply@yourapp.com',

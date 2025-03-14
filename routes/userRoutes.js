@@ -1,9 +1,10 @@
-const express = require('express');
+import express from 'express';
+import userController from '../controllers/userController';
+import authMiddleware from '../middlewares/authMiddleware';
+
 const router = express.Router();
-const userController = require('../controllers/userController');
-const authMiddleware = require('../middlewares/authMiddleware');
 
 router.delete('/address', authMiddleware.verifyToken, userController.deleteAddress);
 router.put('/profile-image', authMiddleware.verifyToken, userController.uploadProfileImage);
 
-module.exports = router;
+export default router;
