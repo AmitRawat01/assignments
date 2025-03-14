@@ -1,15 +1,15 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
-const { jwtSecret } = require('../config/keys');
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel';
+import { jwtSecret } from '../config/keys';
 
-exports.forgotPassword = (req, res) => {
+export const forgotPassword = (req, res) => {
   const email = req.body.email;
   const resetToken = jwt.sign({ email }, jwtSecret, { expiresIn: '15m' });
   // Send reset token via email
   res.status(200).json({ message: 'Password reset token sent' });
 };
 
-exports.verifyResetPassword = (req, res) => {
+export const verifyResetPassword = (req, res) => {
   const token = req.params.token;
   const { password, confirmPassword } = req.body;
 

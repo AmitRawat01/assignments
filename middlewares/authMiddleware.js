@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('../config/keys');
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from '../config/keys';
 
-exports.verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
   const token = req.headers['authorization'];
   jwt.verify(token, jwtSecret, (err, decoded) => {
     if (err) {

@@ -1,8 +1,8 @@
-const User = require('../models/userModel');
-const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('../config/keys');
+import User from '../models/userModel';
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from '../config/keys';
 
-exports.deleteAddress = (req, res) => {
+export const deleteAddress = (req, res) => {
   const token = req.headers['authorization'];
   jwt.verify(token, jwtSecret, (err, decoded) => {
     if (err) {
@@ -13,7 +13,7 @@ exports.deleteAddress = (req, res) => {
   });
 };
 
-exports.uploadProfileImage = (req, res) => {
+export const uploadProfileImage = (req, res) => {
   const file = req.file;
   const storageOption = req.query.storage;
 
