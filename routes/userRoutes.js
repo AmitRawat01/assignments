@@ -1,10 +1,10 @@
 import express from 'express';
-import userController from '../controllers/userController';
-import authMiddleware from '../middlewares/authMiddleware';
+import { deleteAddress, uploadProfileImage } from '../controllers/userController.js';
+
 
 const router = express.Router();
 
-router.delete('/address', authMiddleware.verifyToken, userController.deleteAddress);
-router.put('/profile-image', authMiddleware.verifyToken, userController.uploadProfileImage);
+router.delete('/address', deleteAddress);
+router.put('/profile-image', uploadProfileImage);
 
 export default router;

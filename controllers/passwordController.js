@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel';
-import { jwtSecret } from '../config/keys';
+import { jwtSecret } from '../.config/keys';
 
 export const forgotPassword = (req, res) => {
   const email = req.body.email;

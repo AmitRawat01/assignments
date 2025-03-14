@@ -1,6 +1,8 @@
-import User from '../models/userModel';
+import User from '../models/userModel.js';
+
 import jwt from 'jsonwebtoken';
-import { jwtSecret } from '../config/keys';
+import { jwtSecret } from '../config/keys.js';
+
 
 export const deleteAddress = (req, res) => {
   const token = req.headers['authorization'];
