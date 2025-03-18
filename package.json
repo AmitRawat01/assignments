@@ -1,18 +1,14 @@
 {
-  "name": "my-node-server",
+  "name": "flipkart-snapdeal-scraper",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A web scraper for Flipkart and Snapdeal products using Express",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "md5": "^2.3.0",
-    "mongodb": "^6.13.1"
+    "express": "^4.18.2",
+    "request": "^2.88.2",
+    "cheerio": "^1.0.0"
   }
 }
