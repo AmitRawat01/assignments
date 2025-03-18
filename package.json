@@ -1,27 +1,14 @@
 {
-    "name": "web-scraper",
-    "version": "1.0.0",
-    "description": "Web scraper for Flipkart and Snapdeal products",
-    "main": "index.js",
-    "type": "module",
-    "scripts": {
-      "start": "node index.js",
-      "dev": "nodemon index.js"
-    },
-    "keywords": [
-      "web-scraper",
-      "flipkart",
-      "snapdeal",
-      "express"
-    ],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "axios": "^1.6.2",
-      "cheerio": "^1.0.0-rc.12",
-      "express": "^4.18.2"
-    },
-    "devDependencies": {
-      "nodemon": "^3.0.1"
-    }
+  "name": "flipkart-snapdeal-scraper",
+  "version": "1.0.0",
+  "description": "A web scraper for Flipkart and Snapdeal products using Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "request": "^2.88.2",
+    "cheerio": "^1.0.0"
   }
+}
