@@ -1,5 +1,5 @@
 {
-  "name": "my-node-server",
+  "name": "sequelize-users-demo",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "dotenv": "^16.4.7",
+    "body-parser": "^1.20.3",
+    "crypto": "^1.0.1",
     "express": "^4.21.2",
     "md5": "^2.3.0",
-    "mongodb": "^6.13.1"
+    "mysql2": "^3.13.0",
+    "sequelize": "^6.37.6"
   }
 }
