@@ -1,5 +1,23 @@
 {
+  "name": "my-node-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmitRawat01/assignments.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AmitRawat01/assignments/issues"
+  },
+  "homepage": "https://github.com/AmitRawat01/assignments#readme",
+  "description": "",
   "dependencies": {
-    "typescript": "^5.8.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
   }
 }
